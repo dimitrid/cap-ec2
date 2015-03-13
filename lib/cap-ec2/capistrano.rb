@@ -20,8 +20,9 @@ module Capistrano
       end
 
       def ec2_role(name, options={})
+        role = options.delete(:role) || name
         ec2_handler.get_servers_for_role(name).each do |server|
-          env.role(name, CapEC2::Utils.contact_point(server),
+          env.role(role, CapEC2::Utils.contact_point(server),
                    options_with_instance_id(options, server))
         end
       end
